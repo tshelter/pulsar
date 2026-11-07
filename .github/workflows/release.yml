@@ -27,11 +27,49 @@ jobs:
           cp -R result/bin/* dist/ 2>/dev/null || true
           ls -l dist || true
 
-      - name: Sign builds
-        if: ${{ false }}
+      - name: Backup current release workflow
         run: |
-          echo "Signing step is not enabled yet."
-          exit 0
+          mkdir -p /tmp/pulsar-release-backups
+          cp -n .github/workflows/release.yml /tmp/pulsar-release-backups/release.yml.$(date +%Y%m%dT%H%M%S) 2>/dev/null || true
+
+      - name: Sign builds
+        env:
+          SIGNING_KEY_CONTENTS: ${{ secrets.PULSAR_RELEASE_SIGNING_KEY }}
+          SIGNING_KEY_PASSPHRASE: ${{ secrets.PULSAR_RELEASE_SIGNING_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          tmpdir="$(mktemp -d)"
+          trap 'rm -rf "${tmpdir}"' EXIT
+
+          artifact="pulsar-${TARGET:-x86_64-linux}-${VERSION:-$(make -C src version)}"
+          ln -sf "result/bin/pulsar" "${tmpdir}/${artifact}" 2>/dev/null || cp -f "result/bin/pulsar" "${tmpdir}/${artifact}"
+
+          keyfile="${tmpdir}/signing.key"
+          printf '%s' "${SIGNING_KEY_CONTENTS:-}" > "${keyfile}"
+          chmod 600 "${keyfile}"
+
+          GNUPGHOME="${tmpdir}/gnupg"
+          export GNUPGHOME
+          mkdir -p "${GNUPGHOME}"
+          chmod 700 "${GNUPGHOME}"
+
+          if [ "${SIGNING_KEY_CONTENTS:-}" = "" ] || [ "${SIGNING_KEY_PASSPHRASE:-}" = "" ]; then
+            echo "Signing material missing; releasing unsigned."
+            exit 0
+          fi
+
+          gpg --batch --yes --no-tty --pinentry-mode loopback \
+            --passphrase "${SIGNING_KEY_PASSPHRASE}" \
+            --import "${keyfile}" >/dev/null 2>&1
+
+          gpg --batch --yes --no-tty --pinentry-mode loopback \
+            --passphrase "${SIGNING_KEY_PASSPHRASE}" \
+            --armor --detach-sign --output "${tmpdir}/${artifact}.asc" "${tmpdir}/${artifact}"
+
+          mkdir -p dist
+          cp "${tmpdir}/${artifact}" dist/
+          cp "${tmpdir}/${artifact}.asc" dist/
+          ls -l dist
 
       - name: Upload release assets
         uses: softprops/action-gh-release@v2

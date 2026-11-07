@@ -6,6 +6,7 @@ PULSAR Release Plan
 - [x] v0.0.2: target/connectivity core with ICMP + DNS probes, unit tests begin
 - [x] v0.0.3: additional probes (TCP, HTTP/S, UDP echo), unit tests, CLI commands
 - [x] v0.0.N: CI/CD pipeline, signed builds, release automation, e2e/chaos tests with tc
+- [x] Dedicated GitHub-only signing key created and wired to release workflow
 - [ ] v0.1.0: final release from planned increments, verify builds + tests + releases
 
 Notes:
