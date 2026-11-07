@@ -2,7 +2,7 @@ CC ?= gcc
 CFLAGS ?= -std=c11 -Wall -Wextra -O2
 TARGET = pulsar
 
-SRCS = main.c core.c
+SRCS = main.c core.c probe_dns.c
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all clean
