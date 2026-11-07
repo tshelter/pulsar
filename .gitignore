@@ -1,0 +1,13 @@
+*.o
+*.res.o
+*.exe
+build
+result
+dist
+*.zip
+release
+.env
+.env.local
+*.log
+*.csv
+*.txt
