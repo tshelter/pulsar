@@ -5,13 +5,12 @@ build
 result
 dist
 *.zip
-release
 .env
 .env.local
 *.log
 
-# build output
-src/pulsar
+# release binaries are committed for this project's releases
+# release/
 
 # docs notes in nix/ are intentionally not ignored
 # nix/howto-native.txt
