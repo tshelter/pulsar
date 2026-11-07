@@ -1,0 +1,3 @@
+PULSAR release signing public key
+
+fingerprint: AFDA25C1B1CBD00C8018EF71C08974A3B13BA9C4
