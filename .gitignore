@@ -1,0 +1,19 @@
+*.o
+*.res.o
+*.exe
+build
+result
+dist
+*.zip
+tests/test_core
+tests/test_dns
+tests/test_main
+.env
+.env.local
+*.log
+
+# build output
+src/pulsar
+
+# docs notes in nix/ are intentionally not ignored
+# nix/howto-native.txt

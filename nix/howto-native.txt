@@ -1,0 +1,15 @@
+PULSAR Nix build notes (work-in-progress)
+
+Current status:
+- flake.nix provides a dev shell with gcc, make, git, openssh, curl, jq, nixpkgs-fmt.
+- src/Makefile builds a native Linux pulsar binary.
+
+Planned:
+- Nix package for pulsar on Linux.
+- Cross builds for macOS and Windows via Nix.
+- Super-static Linux build path for maximum portability.
+- Signed builds in CI for releases.
+
+Signing:
+- We will set up signing in CI once credentials are available.
+- Until then, builds will be produced and released unsigned or with signing placeholders.
