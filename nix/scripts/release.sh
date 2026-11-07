@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-version="${VERSION:-$(make -C src version)}"
+version="${VERSION:-$(make -C src version 2>/dev/null | sed -n 's/^0\.[0-9.]*$/&/p' | tr -d '[:space:]')}"
+
 target="${TARGET:-x86_64-linux}"
 artifact="pulsar-${target}-${version}"
 

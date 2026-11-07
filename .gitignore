@@ -1,19 +1,17 @@
-*.o
-*.res.o
-*.exe
-build
-result
-dist
-*.zip
-tests/test_core
-tests/test_dns
-tests/test_main
-.env
-.env.local
-*.log
+# Nix
+result/
 
-# build output
+# src build outputs
 src/pulsar
+src/*.o
 
-# docs notes in nix/ are intentionally not ignored
-# nix/howto-native.txt
+# tests build outputs
+tests/test_*
+tests/*.o
+
+# staged GUI build outputs
+gui/linux/dnsping-linux
+gui/macOS/.build/
+gui/macOS/*.xcodeproj/
+gui/macOS/*.swiftpm/
+gui/desktop/*/

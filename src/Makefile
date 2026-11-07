@@ -2,9 +2,9 @@ CC       ?= gcc
 CFLAGS   ?= -std=c11 -Wall -Wextra -O2
 LDFLAGS  ?= -static-libgcc
 TARGET   = pulsar
-VERSION  = $(shell sed -n 's/^#define PULSAR_VERSION "\([^"]*\)"/\1/p' ../src/core.h)
+VERSION  := $(shell grep '^#define PULSAR_VERSION' ../src/core.h | sed -n 's/.*"\(.*\)".*/\1/p')
 
-SRCS = main.c core.c probe_dns.c
+SRCS = main.c core.c probe_dns.c probe_tcp.c probe_icmp.c probe_udp.c probe_http.c probe_https.c
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all clean
@@ -22,4 +22,4 @@ clean:
 
 .PHONY: version
 version:
-	@echo "$(VERSION)"
+	@echo $(VERSION)

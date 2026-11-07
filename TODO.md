@@ -1,15 +1,12 @@
-PULSAR Release Plan
+# PULSAR TODO
 
-- [x] Stand up pulsar repo and flake-based dev shell + first commit scaffolding
-- [x] Define v0.0.1 scope and release plan (basic CLI + portable build + first release)
-- [x] v0.0.1: OS-native C core, small, portable build (Linux/Mac/Windows via Nix), first release
-- [x] v0.0.2: target/connectivity core with ICMP + DNS probes, unit tests begin
-- [x] v0.0.3: additional probes (TCP, HTTP/S, UDP echo), unit tests, CLI commands
-- [x] v0.0.N: CI/CD pipeline, signed builds, release automation, e2e/chaos tests with tc
-- [x] Dedicated GitHub-only signing key created and wired to release workflow
-- [ ] v0.1.0: final release from planned increments, verify builds + tests + releases
-
-Notes:
-- Signed builds via Nix are required for GitHub Actions releases; signing step is a placeholder until credentials/keys are provided.
-- Linux "super static super portable" is a key target.
-- Final goal: v0.1.0 with full coverage roadmap and tc-based e2e tests.
+- [x] CLI core: DNS, ICMP, UDP, HTTP, HTTPS, TCP probes
+- [x] Nix build for CLI core
+- [x] Tests for core, main, dns, tcp, icmp, udp, http, https
+- [x] Signed GitHub releases, GitHub builds in CD signed
+- [x] v0.1.0: stage GUI area, README, TODO, signed release cut and uploaded to GitHub
+- [ ] v0.1.0: decide if gui/ ships in the Nix package or stays staged outside the shipped package
+- [ ] macOS GUI: native AppKit backend wired to the real probe core
+- [ ] Linux GUI: native toolkit backend wired to the real probe core
+- [ ] Windows DNS Ping idea carried forward as the reference GUI design
+- [ ] Parity across macOS and Linux GUI ideas, native pixel implementation per OS

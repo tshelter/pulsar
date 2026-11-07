@@ -41,7 +41,8 @@ jobs:
           tmpdir="$(mktemp -d)"
           trap 'rm -rf "${tmpdir}"' EXIT
 
-          artifact="pulsar-${TARGET:-x86_64-linux}-${VERSION:-$(make -C src version)}"
+          artifact="pulsar-${TARGET:-x86_64-linux}-${VERSION:-$(make -C src version 2>/dev/null | sed -n 's/^0\.[0-9.]*$/&/p' | tr -d '[:space:]')}"
+
           ln -sf "result/bin/pulsar" "${tmpdir}/${artifact}" 2>/dev/null || cp -f "result/bin/pulsar" "${tmpdir}/${artifact}"
 
           keyfile="${tmpdir}/signing.key"

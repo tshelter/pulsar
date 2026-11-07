@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define PULSAR_VERSION "0.0.2-dev"
+#define PULSAR_VERSION "0.1.0"
 
 typedef enum {
     PROTO_ICMP = 1,
