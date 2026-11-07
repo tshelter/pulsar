@@ -2,7 +2,7 @@ CC ?= gcc
 CFLAGS ?= -std=c11 -Wall -Wextra -O2
 TARGET = pulsar
 
-SRCS = pulsar.c
+SRCS = main.c core.c
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all clean
