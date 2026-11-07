@@ -43,7 +43,14 @@ jobs:
 
           artifact="pulsar-${TARGET:-x86_64-linux}-${VERSION:-$(make -C src version 2>/dev/null | sed -n 's/^0\.[0-9.]*$/&/p' | tr -d '[:space:]')}"
 
-          ln -sf "result/bin/pulsar" "${tmpdir}/${artifact}" 2>/dev/null || cp -f "result/bin/pulsar" "${tmpdir}/${artifact}"
+          if [ -f "result/bin/pulsar" ]; then
+            ln -sf "result/bin/pulsar" "${tmpdir}/${artifact}" 2>/dev/null || cp -f "result/bin/pulsar" "${tmpdir}/${artifact}"
+          elif [ -f "dist/pulsar" ]; then
+            cp -f "dist/pulsar" "${tmpdir}/${artifact}"
+          else
+            echo "ERROR: built pulsar binary not found in result/bin/pulsar or dist/pulsar"
+            exit 1
+          fi
 
           keyfile="${tmpdir}/signing.key"
           printf '%s' "${SIGNING_KEY_CONTENTS:-}" > "${keyfile}"
