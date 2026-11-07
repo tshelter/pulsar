@@ -9,5 +9,9 @@ release
 .env
 .env.local
 *.log
-*.csv
-*.txt
+
+# build output
+src/pulsar
+
+# docs notes in nix/ are intentionally not ignored
+# nix/howto-native.txt
